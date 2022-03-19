@@ -11,6 +11,7 @@ char winDetect(const vector<vector<char>>&, int moveNum);
 int main()
 {
 	vector<vector<char>> board(3, vector<char>(3, ' '));
+
 	bool end = menu();
 
 	while (!end) {
@@ -20,7 +21,6 @@ int main()
 		displayBoard(board);
 
 		while (noWinner) {
-
 			makeMove(board, moveNum);
 
 			displayBoard(board);
@@ -62,6 +62,7 @@ bool menu() {
 
 void displayBoard(const vector<vector<char>>& board) {
 	cout << "-------" << endl;
+	//for loop to print out all the rows
 	for (auto y: board) {
 		cout << "|" << y[0] << "|" << y[1] << "|" << y[2] << "|" << endl;
 		cout << "-------" << endl;
@@ -70,12 +71,14 @@ void displayBoard(const vector<vector<char>>& board) {
 
 void makeMove(vector<vector<char>>& board, int& moveNum) {
 		pair<int, int> coord;
+		//if move number is even
 		if (moveNum % 2 == 0) {
 			cout << "Player X Turn\n";
 			input(board, coord);
 			board[3-coord.second][coord.first-1] = 'X';
 			++moveNum;
 		}
+		//if move number is odd
 		else if (moveNum % 2 == 1) {
 			cout << "Player O Turn\n";
 			input(board,  coord);
@@ -102,6 +105,7 @@ void input(vector<vector<char>>& board, pair<int, int>& coord) {
 
 char winDetect(const vector<vector<char>>& board, int moveNum) {
 	if (moveNum > 2) {
+		//2 for loops for checking horizontal and vertical wins
 		for (int i = 0; i < 3; ++i) {
 			if (board[i][0] == board[i][1] && board[i][0] == board[i][2])
 				return board[i][0];
@@ -110,6 +114,7 @@ char winDetect(const vector<vector<char>>& board, int moveNum) {
 			if (board[0][x] == board[1][x] && board[0][x] == board[2][x])
 				return board[0][x];
 		}
+		// 2 if statements to check for diagonal wins
 		if (board[0][0] == board[1][1] && board[0][0] == board[2][2])
 			return board[0][0];
 		if (board[2][0] == board[1][1] && board[2][0] == board[0][2])
